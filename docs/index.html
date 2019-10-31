@@ -45,6 +45,36 @@
             super();
             this._shadowRoot = this.attachShadow({ mode: "open" })
             this._shadowRoot.appendChild(template.content.cloneNode(true))
+            this.$container = this._shadowRoot.querySelectorAll('button')
+            this.attrs = {}
+        }
+
+        static get observedAttributes() {
+            return ['padd', 'bgcolor', 'textcolor']
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+            //this.attrs[name] = newValue
+            this.rander(name, newValue)
+        }
+
+        rander(name, newValue) {
+            for (let i = 0; i < this.$container.length; i++) {
+                const element = this.$container[i];
+                switch (name) {
+                    case 'padd':
+                        element.style.padding = newValue
+                        break;
+                    case 'bgcolor':
+                        element.style.background = newValue
+                        break;
+                    case 'textcolor':
+                        element.style.color = newValue
+                        break
+
+                }
+            }
+
         }
     }
 
@@ -54,9 +84,9 @@
 </script>
 
 <body>
-    <my-buttons></my-buttons>
-    <my-buttons></my-buttons>
-    <my-buttons></my-buttons>
+    <my-buttons padd="25px"></my-buttons>
+    <my-buttons bgcolor="red"></my-buttons>
+    <my-buttons textcolor="purple" ></my-buttons>
     <my-buttons></my-buttons>
     <my-buttons></my-buttons>
     <my-buttons></my-buttons>
